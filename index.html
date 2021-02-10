@@ -180,12 +180,14 @@
                   class="card-subtitle mb-2 text-muted">
                   {{ task.username }}
                 </h6>
-                <a href="#" class="card-link">
+                <a 
+                  href="#" 
+                  class="card-link">
                   <span
                     class="material-icons text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
-                  >
+                    @click.prevent="editForm(task.id)">
                     edit
                   </span>
                 </a>
@@ -245,14 +247,17 @@
                   class="card-subtitle mb-2 text-muted">
                   {{ task.username }}
                 </h6>
-                <a href="#" class="card-link"
-                  ><span
+                <a 
+                  href="#" 
+                  class="card-link">
+                  <span
                     class="material-icons text-info"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
+                    @click.prevent="editForm(task.id)">
+                    edit
+                  </span>
+                </a>
                 <a href="#" class="card-link">
                   <span 
                     class="material-icons text-danger"
@@ -323,11 +328,11 @@
                   <span
                     class="material-icons text-info"
                     data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                    data-bs-target="#exampleModal"
+                    @click.prevent="editForm(task.id)">
                     edit
                   </span>
-                </a
-                >
+                </a>
                 <a href="#" class="card-link">
                   <span 
                     class="material-icons text-danger"
@@ -398,7 +403,8 @@
                   <span
                     class="material-icons text-info"
                     data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                    data-bs-target="#exampleModal"
+                    @click.prevent="editForm(task.id)">
                     edit
                   </span>
                 </a>
@@ -466,17 +472,20 @@
                 <div class="modal-body">
                   <form>
                     <label class="form-label">Title</label>
-                    <input type="text" class="form-control" />
+                    <input 
+                      type="text" 
+                      class="form-control"
+                      v-model="title"/>
                     <label class="form-label">Category</label>
                     <select
                       class="form-select"
                       aria-label="Default select example"
-                    >
-                      <option selected>Select a category</option>
-                      <option value="backlog">Backlog</option>
-                      <option value="todo">Todo</option>
-                      <option value="doing">Doing</option>
-                      <option value="done">Done</option>
+                      v-model="category">
+                      <option disabled value="">Select a category</option>
+                      <option>Backlog</option>
+                      <option>Todo</option>
+                      <option>Doing</option>
+                      <option>Done</option>
                     </select>
                   </form>
                 </div>
@@ -488,7 +497,10 @@
                   >
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary">
+                  <button 
+                    type="button" 
+                    class="btn btn-primary"
+                    @click.prevent="editTask">
                     Save changes
                   </button>
                 </div>

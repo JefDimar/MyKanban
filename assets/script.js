@@ -16,7 +16,9 @@ const app = new Vue({
       todo: "",
       done: ""
     },
-    category: "",
+    title: '',
+    category: '',
+    id: 0,
     tasks: [],
     server: "http://localhost:3030/",
   },
@@ -189,6 +191,55 @@ const app = new Vue({
           })
         }
       })
+    },
+    editForm(id) {
+      axios({
+        method: 'GET',
+        url: this.server + `tasks/${id}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          const category = data.category.charAt(0).toUpperCase() + data.category.slice(1)
+
+          this.id = data.id
+          this.title = data.title
+          this.category = category
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        })
+    },
+    editTask() {
+      const id = this.id
+      const category = this.category.toLowerCase()
+
+      axios({
+        method: 'PUT',
+        url: this.server + `tasks/${id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: this.title,
+          category
+        }
+      })
+        .then(({data}) => {
+          console.log(data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Success change category',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.checkAuth()
+        })
+        .catch(({ response }) => {
+          console.log(response);
+          Swal.fire(response, '', 'error')
+        })
     }
   },
   created() {
