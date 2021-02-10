@@ -5,3 +5,7 @@ body {
 .card-body a span {
   font-size: 20px;
 }
+
+.card-header {
+  width: 100%;
+}
