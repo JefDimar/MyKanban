@@ -246,7 +246,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Tasks"
-                v-model="backlog"
+                v-model="addTasks.backlog"
               />
               <button
                 type="submit"
@@ -355,12 +355,12 @@
                 type="text"
                 class="form-control"
                 placeholder="Tasks"
-                v-model="doing"
+                v-model="addTasks.todo"
               />
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click.prevent="createTasks('doing')"
+                @click.prevent="createTasks('todo')"
               >
                 Submit
               </button>
@@ -460,7 +460,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Tasks"
-                v-model="todo"
+                v-model="addTasks.doing"
               />
               <button
                 type="submit"
@@ -560,12 +560,12 @@
                 type="text"
                 class="form-control"
                 placeholder="Tasks"
-                v-model="done"
+                v-model="addTasks.done"
               />
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click.prevent="createTasks('backlog')"
+                @click.prevent="createTasks('done')"
               >
                 Submit
               </button>

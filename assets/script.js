@@ -10,10 +10,12 @@ const app = new Vue({
       email: "",
       password: "",
     },
-    backlog: "",
-    doing: "",
-    todo: "",
-    done: "",
+    addTasks: {
+      backlog: "",
+      doing: "",
+      todo: "",
+      done: ""
+    },
     category: "",
     tasks: [],
     server: "http://localhost:3030/",
@@ -34,16 +36,15 @@ const app = new Vue({
         .then(({ data }) => {
           localStorage.setItem("access_token", data.access_token);
           this.page = "main";
+          this.fetchTasks;
+          this.login.email = ''
+          this.login.password = ''
         })
         .catch(({ response }) => {
           const errors = response.data.message;
           Swal.fire(errors, "", "error");
           this.page = "login";
         })
-        .then((_) => {
-          this.login.email = "";
-          this.login.password = "";
-        });
     },
     registerServ() {
       axios({
@@ -56,6 +57,12 @@ const app = new Vue({
       })
         .then(({ data }) => {
           console.log(data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Yeay you are registered, please login first',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.page = "login";
         })
         .catch(({ response }) => {
@@ -89,20 +96,47 @@ const app = new Vue({
           this.tasks.push(data);
         })
         .catch(({ response }) => {
-          console.log(response.data);
+          console.log(response.data.message);
         });
     },
-    createTasks() {
-      
+    createTasks(category) {
+      const input = {
+        tasks: this.addTasks[category],
+        category
+      }
+      axios({
+        method: 'POST',
+        url: this.server + 'tasks',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: input.tasks,
+          category: input.category 
+        }
+      })
+        .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Tasks added',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(({ response }) => {
+          Swal.fire(response.data.message[0], '', 'error')
+        })
     },
   },
   created() {
     const access_token = localStorage.access_token;
     if (access_token) {
       this.page = "main";
-      this.fetchTasks;
     } else {
       this.page = "login";
     }
   },
+  computed: {
+
+  }
 });
