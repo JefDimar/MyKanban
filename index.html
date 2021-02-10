@@ -1,230 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google meta -->
-  <meta name="google-signin-client_id" content="430929796049-fmn0p473ofhisfpadup678qcg8533ict.apps.googleusercontent.com">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-  <!-- handle error favicon.ico -->
-  <link rel="shortcut icon" href="#">
-  <!-- Material icons cdn -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <!-- File css -->
-  <link rel="stylesheet" href="./assets/style.css">
+    <!-- Google meta -->
+    <meta
+      name="google-signin-client_id"
+      content="430929796049-fmn0p473ofhisfpadup678qcg8533ict.apps.googleusercontent.com"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <!-- handle error favicon.ico -->
+    <link rel="shortcut icon" href="#" />
+    <!-- Material icons cdn -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- File css -->
+    <link rel="stylesheet" href="./assets/style.css" />
 
-  <title>Kanban Board</title>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Kanban Board</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#" id="home-navbar">Home</a>
-          <a class="nav-link active" aria-current="page" href="#" id="logout-navbar">Logout</a>
+    <title>Kanban Board</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"> Kanban Board </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                id="home-navbar"
+                v-if="page === 'main'"
+                @click.prevent="changePage('main')"
+              >
+                Home
+              </a>
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                id="logout-navbar"
+                v-if="page === 'main'"
+                @click.prevent="changePage('login')"
+              >
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Login form -->
+      <main
+        class="form-signin container mb-3"
+        v-if="page === 'login'"
+        @submit.prevent="changePage('main')"
+      >
+        <form class="col-4 offset-4 mb-2">
+          <h1 class="mb-3 fw-normal text-xl-center text">
+            <strong>Please sign in</strong>
+          </h1>
+          <label for="inputEmail" class="visually-hidden">
+            Email address
+          </label>
+          <input
+            type="email"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email address"
+            required=""
+            autofocus=""
+            v-model="email"
+          />
+          <label for="inputPassword" class="visually-hidden"> Password </label>
+          <input
+            type="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required=""
+            v-model="password"
+          />
+          <button class="w-100 btn btn-lg btn-info mt-2" type="submit">
+            Sign in
+          </button>
+          <button
+            class="w-100 btn btn-lg btn-success"
+            type="submit"
+            @click.prevent="changePage('register')"
+          >
+            Don't Have An Account?
+          </button>
+        </form>
+        <h3 class="mb-3 col-4 offset-4">Or Sign In With:</h3>
+        <div
+          class="g-signin2 mb-3 col-4 offset-4"
+          data-onsuccess="onSignIn"
+        ></div>
+      </main>
+
+      <!-- Register form -->
+      <main
+        class="form-signup container mb-3"
+        v-if="page === 'register'"
+        @submit.prevent="changePage('login')"
+      >
+        <form class="col-4 offset-4 mb-2">
+          <h1 class="mb-3 fw-normal text-xl-center">
+            <strong> Register here </strong>
+          </h1>
+          <label for="inputEmail" class="visually-hidden">
+            Email address
+          </label>
+          <input
+            type="email"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email address"
+            required=""
+            autofocus=""
+            v-model="email"
+          />
+          <label for="inputPassword" class="visually-hidden"> Password </label>
+          <input
+            type="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required=""
+            v-model="password"
+          />
+          <button class="w-100 btn btn-lg btn-info mt-2" type="submit">
+            Sign in
+          </button>
+          <button
+            class="w-100 btn btn-lg btn-success"
+            type="submit"
+            @click.prevent="changePage('login')"
+          >
+            I Have An Account
+          </button>
+        </form>
+        <h3 class="mb-3 col-4 offset-4">Or Sign In With:</h3>
+        <div
+          class="g-signin2 mb-3 col-4 offset-4"
+          data-onsuccess="onSignIn"
+        ></div>
+      </main>
+
+      <!-- Main page / Kanban board -->
+      <div class="container-fluid" v-if="page === 'main'">
+        <div class="row">
+          <!-- Backlog -->
+          <div class="card col m-3">
+            <h2 class="card-header bg-info">Backlog</h2>
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link">
+                  <span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    edit
+                  </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-danger"> delete </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-success"> last_page </span>
+                </a>
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link">
+                  <span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    edit
+                  </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-danger"> delete </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-success"> last_page </span>
+                </a>
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link">
+                  <span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    edit
+                  </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-danger"> delete </span>
+                </a>
+                <a href="#" class="card-link">
+                  <span class="material-icons text-success"> last_page </span>
+                </a>
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Form add-->
+            <div class="input-group mb-3">
+              <span class="input-group-text"> Add </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tasks"
+                v-model="backlog"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="createTasks('backlog')"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- End of form add -->
+          </div>
+          <!-- End of category -->
+
+          <!-- Todo -->
+          <div class="card col m-3">
+            <h2 class="card-header bg-warning">Todo</h2>
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+             <!-- Tasks -->
+             <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+             <!-- Tasks -->
+             <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Form add-->
+            <div class="input-group mb-3">
+              <span class="input-group-text">Add</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tasks"
+                v-model="doing"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="createTasks('doing')"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- End of form add -->
+          </div>
+          <!-- End of category -->
+
+          <!-- Doing -->
+          <div class="card col m-3">
+            <h2 class="card-header bg-primary">Doing</h2>
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success">last_page</span></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Form add-->
+            <div class="input-group mb-3">
+              <span class="input-group-text">Add</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tasks"
+                v-model="todo"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="createTasks('doing')"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- End of form add -->
+          </div>
+          <!-- End of category -->
+
+          <!-- Done -->
+          <div class="card col m-3">
+            <h2 class="card-header bg-success">Done</h2>
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Tasks -->
+            <div class="card-block" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">Tasks title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+                <a href="#" class="card-link"
+                  ><span
+                    class="material-icons text-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >edit</span
+                  ></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-danger">delete</span></a
+                >
+                <a href="#" class="card-link"
+                  ><span class="material-icons text-success"
+                    >first_page</span
+                  ></a
+                >
+              </div>
+            </div>
+            <!-- End of tasks-->
+
+            <!-- Form add-->
+            <div class="input-group mb-3">
+              <span class="input-group-text">Add</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tasks"
+                v-model="done"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="createTasks('backlog')"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- End of form add -->
+          </div>
+          <!-- End of category -->
+
+          <!-- Modal edit page -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            v-show="page === 'main'"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Edit Tasks:
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" />
+                    <label class="form-label">Category</label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Select a category</option>
+                      <option value="backlog">Backlog</option>
+                      <option value="todo">Todo</option>
+                      <option value="doing">Doing</option>
+                      <option value="done">Done</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- End of main page -->
         </div>
       </div>
     </div>
-  </nav>
 
-  <!-- Login form -->
-  <main class="form-signin container mb-3">
-    <form class="col-4 offset-4 mb-2">
-      <h1 class="mb-3 fw-normal text-xl-center text"><strong>Please sign in</strong></h1>
-      <label for="inputEmail" class="visually-hidden">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-      <label for="inputPassword" class="visually-hidden">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-      <button class="w-100 btn btn-lg btn-info mt-2" type="submit">Sign in</button>
-      <button class="w-100 btn btn-lg btn-success" type="submit">Don't Have An Account?</button>
-    </form>
-    <h3 class="mb-3 col-4 offset-4">Or Sign In With:</h3>
-    <div class="g-signin2 mb-3 col-4 offset-4" data-onsuccess="onSignIn"></div>
-  </main>
-
-  <!-- Register form -->
-  <main class="form-signup container mb-3">
-    <form class="col-4 offset-4 mb-2">
-      <h1 class="mb-3 fw-normal text-xl-center"><strong>Register here</strong></h1>
-      <label for="inputEmail" class="visually-hidden">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-      <label for="inputPassword" class="visually-hidden">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-      <button class="w-100 btn btn-lg btn-info mt-2" type="submit">Sign in</button>
-      <button class="w-100 btn btn-lg btn-success" type="submit">I Have An Account</button>
-    </form>
-    <h3 class="mb-3 col-4 offset-4">Or Sign In With:</h3>
-    <div class="g-signin2 mb-3 col-4 offset-4" data-onsuccess="onSignIn"></div>
-  </main>
-
-  <!-- Main page / Kanban board -->
-  <div class="container-fluid">
-    <div class="row">
-  
-      <!-- Backlog -->
-      <div class="card col m-3">
-        <h2 class="card-header bg-info">Backlog</h2>
-
-        <!-- Tasks -->
-        <div class="card-block" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Tasks title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-            <a href="#" class="card-link"><span class="material-icons text-info" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-danger">delete</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">last_page</span></a>
-          </div>
-        </div>
-        <!-- End of tasks-->
-
-        <!-- Form add-->
-        <div class="input-group mb-3">
-          <span class="input-group-text">Add</span>
-          <input type="text" class="form-control" placeholder="Tasks">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <!-- End of form add -->
-
-      </div>
-      <!-- End of category -->
-
-      <!-- Todo -->
-      <div class="card col m-3">
-        <h2 class="card-header bg-warning">Todo</h2>
-
-        <!-- Tasks -->
-        <div class="card-block" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Tasks title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-            <a href="#" class="card-link"><span class="material-icons text-info" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-danger">delete</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">first_page</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">last_page</span></a>
-          </div>
-        </div>
-        <!-- End of tasks-->
-
-        <!-- Form add-->
-        <div class="input-group mb-3">
-          <span class="input-group-text">Add</span>
-          <input type="text" class="form-control" placeholder="Tasks">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <!-- End of form add -->
-        
-      </div>
-      <!-- End of category -->
-
-      <!-- Doing -->
-      <div class="card col m-3">
-        <h2 class="card-header bg-primary">Doing</h2>
-
-        <!-- Tasks -->
-        <div class="card-block" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Tasks title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-            <a href="#" class="card-link"><span class="material-icons text-info" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-danger">delete</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">first_page</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">last_page</span></a>
-          </div>
-        </div>
-        <!-- End of tasks-->
-
-        <!-- Form add-->
-        <div class="input-group mb-3">
-          <span class="input-group-text">Add</span>
-          <input type="text" class="form-control" placeholder="Tasks">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <!-- End of form add -->
-        
-      </div>
-      <!-- End of category -->
-
-      <!-- Done -->
-      <div class="card col m-3">
-        <h2 class="card-header bg-success">Done</h2>
-
-        <!-- Tasks -->
-        <div class="card-block" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Tasks title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-            <a href="#" class="card-link"><span class="material-icons text-info" data-bs-toggle="modal" data-bs-target="#exampleModal">edit</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-danger">delete</span></a>
-            <a href="#" class="card-link"><span class="material-icons text-success">first_page</span></a>
-          </div>
-        </div>
-        <!-- End of tasks-->
-
-        <!-- Form add-->
-        <div class="input-group mb-3">
-          <span class="input-group-text">Add</span>
-          <input type="text" class="form-control" placeholder="Tasks">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <!-- End of form add -->
-        
-      </div>
-      <!-- End of category -->
-
-      <!-- Modal edit page -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Tasks:</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <label class="form-label">Title</label>
-                <input type="text" class="form-control">
-                <label class="form-label">Category</label>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Select a category</option>
-                  <option value="backlog">Backlog</option>
-                  <option value="todo">Todo</option>
-                  <option value="doing">Doing</option>
-                  <option value="done">Done</option>
-                </select>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-    <!-- End of main page -->
-    </div>
-  </div>
-
-     
-
-
-
-  <!-- Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-  <!-- Sweetalert2 (error popup) -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  <!-- Google -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-</body>
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+      integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+      integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Sweetalert2 (error popup) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Vue cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- Script javascript -->
+    <script src="./assets/script.js"></script>
+  </body>
 </html>
