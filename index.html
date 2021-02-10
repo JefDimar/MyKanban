@@ -169,57 +169,11 @@
 
             <!-- Tasks -->
             <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link">
-                  <span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    edit
-                  </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-danger"> delete </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-success"> last_page </span>
-                </a>
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link">
-                  <span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    edit
-                  </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-danger"> delete </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-success"> last_page </span>
-                </a>
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+              <div 
+                class="card-body"
+                v-for="task in backlogTasks" :key="task.id">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ task.username }}</h6>
                 <a href="#" class="card-link">
                   <span
                     class="material-icons text-info"
@@ -266,65 +220,11 @@
 
             <!-- Tasks -->
             <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success"
-                    >first_page</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success">last_page</span></a
-                >
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success"
-                    >first_page</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success">last_page</span></a
-                >
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+              <div 
+                class="card-body"
+                v-for="task in todoTasks" :key="task.id">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ task.username }}</h6>
                 <a href="#" class="card-link"
                   ><span
                     class="material-icons text-info"
@@ -375,9 +275,11 @@
 
             <!-- Tasks -->
             <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+              <div 
+                class="card-body"
+                v-for="task in doingTasks" :key="task.id">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ task.username }}</h6>
                 <a href="#" class="card-link"
                   ><span
                     class="material-icons text-info"
@@ -392,60 +294,6 @@
                 <a href="#" class="card-link">
                   <span class="material-icons text-success"> first_page </span>
                 </a>
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success">last_page</span></a
-                >
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link">
-                  <span class="material-icons text-danger"> delete </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-success"> first_page </span>
-                </a>
-                <a href="#" class="card-link">
-                  <span class="material-icons text-success"> last_page </span>
-                </a>
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success"
-                    >first_page</span
-                  ></a
-                >
                 <a href="#" class="card-link"
                   ><span class="material-icons text-success">last_page</span></a
                 >
@@ -480,59 +328,11 @@
 
             <!-- Tasks -->
             <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success"
-                    >first_page</span
-                  ></a
-                >
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
-                <a href="#" class="card-link"
-                  ><span
-                    class="material-icons text-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    >edit</span
-                  ></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-success"
-                    >first_page</span
-                  ></a
-                >
-              </div>
-            </div>
-            <!-- End of tasks-->
-
-            <!-- Tasks -->
-            <div class="card-block" style="width: 18rem">
-              <div class="card-body">
-                <h5 class="card-title">Tasks title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Username Creator</h6>
+              <div 
+                class="card-body"
+                v-for="task in doneTasks" :key="task.id">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ task.username }}</h6>
                 <a href="#" class="card-link"
                   ><span
                     class="material-icons text-info"

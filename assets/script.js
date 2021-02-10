@@ -92,8 +92,7 @@ const app = new Vue({
         },
       })
         .then(({ data }) => {
-          console.log(data);
-          this.tasks.push(data);
+          this.tasks = data;
         })
         .catch(({ response }) => {
           console.log(response.data.message);
@@ -122,21 +121,37 @@ const app = new Vue({
             showConfirmButton: false,
             timer: 1500
           })
+          this.checkAuth()
         })
         .catch(({ response }) => {
           Swal.fire(response.data.message[0], '', 'error')
         })
     },
-  },
-  created() {
-    const access_token = localStorage.access_token;
-    if (access_token) {
-      this.page = "main";
-    } else {
-      this.page = "login";
+    checkAuth() {
+      const access_token = localStorage.access_token;
+      if (access_token) {
+        this.page = "main";
+        this.fetchTasks()
+      } else {
+        this.page = "login";
+      }
     }
   },
+  created() {
+    this.checkAuth()
+  },
   computed: {
-
+    backlogTasks() {
+      return this.tasks.filter(task => task.category === 'backlog')
+    },
+    todoTasks() {
+      return this.tasks.filter(task => task.category === 'todo')
+    },
+    doingTasks() {
+      return this.tasks.filter(task => task.category === 'doing')
+    },
+    doneTasks() {
+      return this.tasks.filter(task => task.category === 'done')
+    }
   }
 });
