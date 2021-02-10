@@ -190,7 +190,11 @@
                   </span>
                 </a>
                 <a href="#" class="card-link">
-                  <span class="material-icons text-danger"> delete </span>
+                  <span 
+                    class="material-icons text-danger"
+                    @click.prevent="deleteTask(task.id)">
+                    delete
+                  </span>
                 </a>
                 <a href="#" class="card-link">
                   <span 
@@ -249,9 +253,13 @@
                     >edit</span
                   ></a
                 >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
+                <a href="#" class="card-link">
+                  <span 
+                    class="material-icons text-danger"
+                    @click.prevent="deleteTask(task.id)">
+                    delete
+                  </span>
+                </a>
                 <a href="#" class="card-link"
                   ><span 
                     class="material-icons text-success"
@@ -320,9 +328,13 @@
                   </span>
                 </a
                 >
-                <a href="#" class="card-link"
-                  ><span class="material-icons text-danger">delete</span></a
-                >
+                <a href="#" class="card-link">
+                  <span 
+                    class="material-icons text-danger"
+                    @click.prevent="deleteTask(task.id)">
+                    delete
+                  </span>
+                </a>
                 <a href="#" class="card-link">
                   <span 
                     class="material-icons text-success"
@@ -393,7 +405,7 @@
                 <a href="#" class="card-link">
                   <span 
                     class="material-icons text-danger"
-                    >
+                    @click.prevent="deleteTask(task.id)">
                     delete
                   </span>
                 </a>
