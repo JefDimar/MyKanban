@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/JefDimar/kanban-client-1#readme",
   "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "sweetalert2": "^10.14.0",
     "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   },
