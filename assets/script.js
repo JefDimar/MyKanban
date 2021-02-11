@@ -82,6 +82,10 @@ const app = new Vue({
         });
     },
     btnLogout() {
+      const auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
       localStorage.clear();
       this.page = "login";
     },
@@ -187,7 +191,7 @@ const app = new Vue({
             this.checkAuth()
           })
           .catch(({ response }) => {
-            Swal.fire(response, '', 'error')
+            Swal.fire(response.data, '', 'error')
           })
         }
       })

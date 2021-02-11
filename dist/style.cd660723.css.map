@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets/style.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"style.cd660723.css","sourceRoot":"..","sourcesContent":["body {\n  background-color: #3275a8;\n}\n\n.card-body a span {\n  font-size: 20px;\n}"]}
