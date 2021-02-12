@@ -11,6 +11,7 @@
       <a href="#" class="card-link">
         <span
           class="material-icons text-info"
+          data-toggle="modal" data-target="#exampleModal"
           @click.prevent="editTask(task.id)"
         >
           edit

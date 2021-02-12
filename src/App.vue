@@ -8,13 +8,15 @@
     <Login 
       v-if="page === 'login'" 
       @gantiPage="changePage" 
-      @login="login">
+      @login="login"
+      @googleLogin="googleLogin">
     </Login>
 
     <Register
       v-if="page === 'register'"
       @gantiPage="changePage"
-      @register="register">
+      @register="register"
+      @googleLogin="googleLogin">
     </Register>
 
     <Main 
@@ -190,7 +192,6 @@ export default {
         tasks: input,
         category
       }
-      console.log(data);
       axios({
         method: 'POST',
         url: this.server + 'tasks',
@@ -214,7 +215,24 @@ export default {
         .catch(({ response }) => {
           Swal.fire(response.data.message[0], '', 'error')
         })
-    }
+    },
+    googleLogin(id_token) {
+      // console.log(id_token);
+      axios({
+        method: 'POST',
+        url: this.server + 'googleLogin',
+        data: {
+          id_token
+        }
+      })
+        .then(({data}) => {
+          localStorage.setItem('access_token', data.access_token)
+          this.checkAuth()
+        })
+        .catch(({response}) => {
+          console.log(response);
+        })
+    },
   },
   created() {
     this.checkAuth()

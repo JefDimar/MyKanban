@@ -13,6 +13,7 @@
       </Category>
       <!-- End of main page -->
     </div>
+    
     <ModalForm></ModalForm>
   </div>
 </template>
@@ -20,6 +21,7 @@
 <script>
 import Category from '../components/Category'
 import ModalForm from '../components/ModalForm'
+
 
 export default {
   name: 'Main',

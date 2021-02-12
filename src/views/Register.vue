@@ -36,7 +36,14 @@
     </form>
     <h3 class="mb-3 col-4 offset-4">Or Sign In With:</h3>
     <!-- Google button -->
-    <div class="g-signin2 mb-3 col-4 offset-4" data-onsuccess="onSignIn"></div>
+    <g-signin-button
+      class="btn btn-info mb-3 col-4 offset-4"
+      :params="googleSignInParams"
+      @success="onSignInSuccess"
+      @error="onSignInError">
+      <img src="https://img.icons8.com/color/16/000000/google-logo.png">
+      Sign in with Google
+    </g-signin-button>
   </main>
 </template>
 
@@ -48,6 +55,9 @@ export default {
       input: {
         email: '',
         password: ''
+      },
+      googleSignInParams: {
+        client_id: '430929796049-fmn0p473ofhisfpadup678qcg8533ict.apps.googleusercontent.com'
       }
     }
   },
@@ -57,9 +67,30 @@ export default {
     },
     register() {
       this.$emit('register', this.input)
+    },
+    onSignInSuccess (googleUser) {
+      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      const id_token = googleUser.getAuthResponse().id_token // etc etc
+      // console.log(id_token);
+      this.$emit('googleLogin', id_token)
+    },
+    onSignInError (error) {
+      // `error` contains any error occurred.
+      console.log('OH NOES', error)
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: border-box;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
+</style>
