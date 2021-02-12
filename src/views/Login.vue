@@ -57,6 +57,8 @@ export default {
     },
     login() {
       this.$emit('login', this.input)
+      this.input.email = ''
+      this.input.password = ''
     }
   }
 };

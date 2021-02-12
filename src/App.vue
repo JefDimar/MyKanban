@@ -19,10 +19,8 @@
 
     <Main 
       v-if="page === 'main'"
-      :backlogTasks="backlogTasks"
-      :todoTasks="todoTasks"
-      :doingTasks="doingtasks"
-      :doneTasks="doneTasks">
+      :dataTasks="tasks"
+      @changeCategory="changeCategory">
     </Main>
   </div>
 </template>
@@ -132,23 +130,36 @@ export default {
         this.page = "login";
       }
     },
+    changeCategory(id, category) {
+      console.log(id, category);
+      // axios({
+      //   method: 'PATCH',
+      //   url: this.server + `tasks/${id}`,
+      //   headers: {
+      //     access_token: localStorage.access_token
+      //   },
+      //   data: {
+      //     category
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     Swal.fire({
+      //       icon: 'success',
+      //       title: 'Success change category',
+      //       showConfirmButton: false,
+      //       timer: 1500
+      //     })
+      //     this.checkAuth()
+      //   })
+      //   .catch(({ response }) => {
+      //     Swal.fire(response.data.message, '', 'error')
+      //   })
+    }
   },
   created() {
     this.checkAuth()
   },
   computed: {
-    backlogTasks() {
-      return this.tasks.filter(task => task.category === 'backlog')
-    },
-    todoTasks() {
-      return this.tasks.filter(task => task.category === 'todo')
-    },
-    doingTasks() {
-      return this.tasks.filter(task => task.category === 'doing')
-    },
-    doneTasks() {
-      return this.tasks.filter(task => task.category === 'done')
-    }
   }
 };
 </script>
