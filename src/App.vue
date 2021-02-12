@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       page: "login",
-      server: "http://localhost:3030/",
+      server: "https://kanban-server-jefdimar.herokuapp.com/",
       tasks: []
     };
   },
