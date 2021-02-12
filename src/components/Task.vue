@@ -66,7 +66,9 @@ export default {
   },
   methods: {
     editTask(id) {},
-    deleteTask(id) {},
+    deleteTask(id) {
+      this.$emit('deleteTask', id)
+    },
     changeCategory(id, category) {
       this.$emit("changeCategory", id, category);
     },

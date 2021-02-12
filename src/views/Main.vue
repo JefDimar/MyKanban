@@ -7,7 +7,8 @@
         :key="idx"
         :category="category"
         :tasks="dataTasks"
-        @changeCategory="changeCategory">
+        @changeCategory="changeCategory"
+        @deleteTask="deleteTask">
       </Category>
       <!-- End of main page -->
     </div>
@@ -34,6 +35,9 @@ export default {
   methods: {
     changeCategory(id, category) {
       this.$emit('changeCategory', id, category)
+    },
+    deleteTask(id) {
+      this.$emit('deleteTask', id)
     }
   },
   computed: {

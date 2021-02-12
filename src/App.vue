@@ -20,7 +20,8 @@
     <Main 
       v-if="page === 'main'"
       :dataTasks="tasks"
-      @changeCategory="changeCategory">
+      @changeCategory="changeCategory"
+      @deleteTask="deleteTask">
     </Main>
   </div>
 </template>
@@ -154,7 +155,35 @@ export default {
         .catch(({ response }) => {
           Swal.fire(response.data.message, '', 'error')
         })
-    }
+    },
+    deleteTask(id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Do you want to delete todos?',
+        showDenyButton: true,
+        confirmButtonText: `Back`,
+        denyButtonText: `Delete`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Todos not deleted', '', 'info')
+        } else if (result.isDenied) {
+          axios({
+            url: this.server + `tasks/${id}`,
+            method: 'DELETE',
+            headers: {
+              access_token: localStorage.access_token
+            }
+          })
+          .then(({ data }) => {
+            Swal.fire(data.message, '', 'success')
+            this.checkAuth()
+          })
+          .catch(({ response }) => {
+            Swal.fire(response.data, '', 'error')
+          })
+        }
+      })
+    },
   },
   created() {
     this.checkAuth()

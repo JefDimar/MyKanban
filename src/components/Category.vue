@@ -16,11 +16,14 @@
       v-for="task in processTask"
       :key="task.id"
       :task="task"
-      @changeCategory="changeCategory">
+      @changeCategory="changeCategory"
+      @deleteTask="deleteTask">
 
     </Tasks>
 
-    <FormAdd></FormAdd>
+    <FormAdd>
+
+    </FormAdd>
   </div>
   <!-- End of category -->
 </template>
@@ -44,6 +47,9 @@ export default {
   methods: {
     changeCategory(id, category) {
       this.$emit('changeCategory', id, category)
+    },
+    deleteTask(id) {
+      this.$emit('deleteTask', id)
     }
   },
   computed: {
