@@ -21,7 +21,8 @@
       v-if="page === 'main'"
       :dataTasks="tasks"
       @changeCategory="changeCategory"
-      @deleteTask="deleteTask">
+      @deleteTask="deleteTask"
+      @createTask="createTask">
     </Main>
   </div>
 </template>
@@ -184,6 +185,36 @@ export default {
         }
       })
     },
+    createTask(input, category) {
+      const data = {
+        tasks: input,
+        category
+      }
+      console.log(data);
+      axios({
+        method: 'POST',
+        url: this.server + 'tasks',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: data.tasks,
+          category: data.category.toLowerCase()
+        }
+      })
+        .then(_ => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Tasks added',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.checkAuth()
+        })
+        .catch(({ response }) => {
+          Swal.fire(response.data.message[0], '', 'error')
+        })
+    }
   },
   created() {
     this.checkAuth()

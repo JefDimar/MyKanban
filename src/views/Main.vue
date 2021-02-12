@@ -8,7 +8,8 @@
         :category="category"
         :tasks="dataTasks"
         @changeCategory="changeCategory"
-        @deleteTask="deleteTask">
+        @deleteTask="deleteTask"
+        @createTask="createTask">
       </Category>
       <!-- End of main page -->
     </div>
@@ -38,6 +39,9 @@ export default {
     },
     deleteTask(id) {
       this.$emit('deleteTask', id)
+    },
+    createTask(input, category) {
+      this.$emit('createTask', input, category)
     }
   },
   computed: {

@@ -21,7 +21,9 @@
 
     </Tasks>
 
-    <FormAdd>
+    <FormAdd
+      :category="category"
+      @createTask="createTask">
 
     </FormAdd>
   </div>
@@ -50,6 +52,9 @@ export default {
     },
     deleteTask(id) {
       this.$emit('deleteTask', id)
+    },
+    createTask(input, category) {
+      this.$emit('createTask', input, category)
     }
   },
   computed: {
