@@ -32,7 +32,7 @@
               task.category == 'todo' ||
               task.category == 'doing'
           "
-          @click.prevent="changeCategory(task.id, this.geserKiri)"
+          @click.prevent="changeCategory(task.id, geserKiri)"
         >
           first_page
         </span>
@@ -45,7 +45,7 @@
               task.category == 'todo' ||
               task.category == 'doing'
           "
-          @click.prevent="changeCategory(task.id, this.geserKanan)"
+          @click.prevent="changeCategory(task.id, geserKanan)"
         >
           last_page
         </span>
@@ -73,21 +73,21 @@ export default {
   },
   computed: {
     geserKanan() {
-      if (task.category == "backlog") {
-        return task.category == "todo";
-      } else if (task.category == "todo") {
-        return task.category == "doing";
-      } else if (task.category == "doing") {
-        return task.category == "done";
+      if (this.category == "backlog") {
+        return 'todo'
+      } else if (this.category == "todo") {
+        return 'doing'
+      } else if (this.category == "doing") {
+        return 'done'
       }
     },
     geserKiri() {
-      if (task.category == "done") {
-        return task.category == "doing";
-      } else if (task.category == "doing") {
-        return task.category == "todo";
-      } else if (task.category == "todo") {
-        return task.category == "backlog";
+      if (this.category == "done") {
+        return 'doing';
+      } else if (this.category == "doing") {
+        return 'todo'
+      } else if (this.category == "todo") {
+        return 'backlog'
       }
     },
   },
