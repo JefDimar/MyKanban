@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production parcel build index.html",
+    "dev": "parcel index.html"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,10 @@
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.2.0",
+    "cssnano": "^4.1.10",
     "vue-template-compiler": "^2.6.12"
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
   }
 }

@@ -1,53 +1,61 @@
 <template>
-  <!-- Main page / Kanban board -->
   <div class="container-fluid">
     <div class="row">
       <Category
-        v-for="(category, idx) in categories" 
+        v-for="(category, idx) in categories"
         :key="idx"
         :category="category"
         :tasks="dataTasks"
         @changeCategory="changeCategory"
         @deleteTask="deleteTask"
-        @createTask="createTask">
+        @createTask="createTask"
+        @editForm="editForm"
+        v-show="showEditForm == false"
+      >
       </Category>
-      <!-- End of main page -->
+
+      <EditForm 
+        v-show="showEditForm == true"
+        :editData="editData">
+
+      </EditForm>
     </div>
-    
-    <ModalForm></ModalForm>
   </div>
 </template>
 
 <script>
-import Category from '../components/Category'
-import ModalForm from '../components/ModalForm'
-
+import Category from "../components/Category";
+import EditForm from "../components/EditForm";
 
 export default {
-  name: 'Main',
+  name: "Main",
   components: {
     Category,
-    ModalForm
+    EditForm,
   },
-  props: ['dataTasks'],
+  props: ["dataTasks", "editData"],
   data() {
     return {
-      categories: ['Backlog', 'Todo', 'Doing', 'Done'],
-    }
+      categories: ["Backlog", "Todo", "Doing", "Done"],
+      showEditForm: false
+    };
   },
   methods: {
     changeCategory(id, category) {
-      this.$emit('changeCategory', id, category)
+      this.$emit("changeCategory", id, category);
     },
     deleteTask(id) {
-      this.$emit('deleteTask', id)
+      this.$emit("deleteTask", id);
     },
     createTask(input, category) {
-      this.$emit('createTask', input, category)
+      this.$emit("createTask", input, category);
+    },
+    editForm(id) {
+      this.$emit("editForm", id);
+      this.showEditForm = true;
     }
   },
-  computed: {
-  }
+  computed: {},
 };
 </script>
 

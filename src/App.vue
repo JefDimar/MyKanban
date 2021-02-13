@@ -24,7 +24,9 @@
       :dataTasks="tasks"
       @changeCategory="changeCategory"
       @deleteTask="deleteTask"
-      @createTask="createTask">
+      @createTask="createTask"
+      @editForm="editForm"
+      :editData="editData">
     </Main>
   </div>
 </template>
@@ -49,7 +51,8 @@ export default {
     return {
       page: "login",
       server: "https://kanban-server-jefdimar.herokuapp.com/",
-      tasks: []
+      tasks: [],
+      editData: {},
     };
   },
   methods: {
@@ -233,6 +236,22 @@ export default {
           console.log(response);
         })
     },
+    editForm(id) {
+      axios({
+        method: 'GET',
+        url: this.server + `tasks/${id}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({data}) => {
+          // console.log(data);
+          this.editData = data
+        })
+        .catch(({response}) => {
+          console.log(response);
+        })
+    }
   },
   created() {
     this.checkAuth()
@@ -242,4 +261,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  background-color: #4287f5;
+}
+</style>

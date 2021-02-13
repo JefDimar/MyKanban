@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
-// Import Bootstrap an BootstrapVue CSS files (order is important)
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import GSignInButton from 'vue-google-signin-button'
 
+Vue.use(IconsPlugin)
+Vue.use(BootstrapVue)
 Vue.use(GSignInButton)
 
 new Vue({

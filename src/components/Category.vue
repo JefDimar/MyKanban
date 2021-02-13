@@ -17,14 +17,13 @@
       :key="task.id"
       :task="task"
       @changeCategory="changeCategory"
-      @deleteTask="deleteTask">
-
+      @deleteTask="deleteTask"
+      @editForm="editForm">
     </Tasks>
 
     <FormAdd
       :category="category"
       @createTask="createTask">
-
     </FormAdd>
   </div>
   <!-- End of category -->
@@ -55,6 +54,9 @@ export default {
     },
     createTask(input, category) {
       this.$emit('createTask', input, category)
+    },
+    editForm(id) {
+      this.$emit('editForm', id)
     }
   },
   computed: {
@@ -65,4 +67,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.card {
+  height: 80vh;
+  box-shadow: 2px 2px grey;
+  overflow: auto;
+}
+</style>
