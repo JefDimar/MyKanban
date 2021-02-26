@@ -10,13 +10,15 @@
         @deleteTask="deleteTask"
         @createTask="createTask"
         @editForm="editForm"
-        v-show="showEditForm == false"
+        v-show="showEditForm === false"
       >
       </Category>
 
       <EditForm 
-        v-show="showEditForm == true"
-        :editData="editData">
+        v-show="showEditForm === true"
+        :editData="editData"
+        @edit="edit"
+        @closeEdit="closeEdit">
 
       </EditForm>
     </div>
@@ -31,7 +33,7 @@ export default {
   name: "Main",
   components: {
     Category,
-    EditForm,
+    EditForm
   },
   props: ["dataTasks", "editData"],
   data() {
@@ -53,6 +55,12 @@ export default {
     editForm(id) {
       this.$emit("editForm", id);
       this.showEditForm = true;
+    },
+    edit(data) {
+      this.$emit("edit", data);
+    },
+    closeEdit() {
+      this.showEditForm = false
     }
   },
   computed: {},

@@ -21,7 +21,8 @@
         class="btn btn-primary">
         Submit
       </button>
-      <button type="reset" class="btn btn-danger">Cancel</button>
+      <button type="reset" class="btn btn-danger"
+      @click.prevent="cancel">Cancel</button>
     </form>
   </div>
 </template>
@@ -32,25 +33,29 @@ export default {
   props: ['editData'],
   data() {
     return {
-      title: this.getTitle,
-      category: this.getCategory,
-      id: this.getId,
+      title: this.editData.title,
+      category: this.editData.category,
+      id: this.editData.id,
     }
   },
   methods: {
     edit() {
-      
-    }
-  },
-  computed: {
-    getTitle() {
-      return this.editData.title
+      const data = {
+        title: this.title,
+        category: this.category,
+        id: this.id
+      }
+      this.$emit('edit', data)
+      this.$emit('closeEdit')
+      this.title = ''
+      this.category = ''
+      this.id = ''
     },
-    getCategory() {
-      return this.editData.category
-    },
-    getId() {
-      return this.editData.id
+    cancel() {
+      this.$emit('closeEdit', false)
+      this.title = ''
+      this.category = ''
+      this.id = ''
     }
   }
 };

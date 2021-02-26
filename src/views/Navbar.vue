@@ -20,6 +20,7 @@
             aria-current="page"
             href="#"
             v-if="page === 'main'"
+            @click.prevent="home"
           >
             Home
           </a>
@@ -57,7 +58,7 @@ export default {
       this.$emit('gantiPage', 'login')
     },
     home() {
-      this.$emit('gantiPage', 'main')
+      this.$emit('closeEdit', false)
     }
   }
 };

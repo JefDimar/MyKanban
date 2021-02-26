@@ -2,7 +2,8 @@
   <div>
     <Navbar 
       :page="page"
-      @gantiPage="changePage">
+      @gantiPage="changePage"
+      @closeEdit="closeEdit">
     </Navbar>
 
     <Login 
@@ -26,7 +27,9 @@
       @deleteTask="deleteTask"
       @createTask="createTask"
       @editForm="editForm"
-      :editData="editData">
+      @edit="edit"
+      :editData="editData"
+      :closeEdit="closeEdit">
     </Main>
   </div>
 </template>
@@ -53,6 +56,7 @@ export default {
       server: "https://kanban-server-jefdimar.herokuapp.com/",
       tasks: [],
       editData: {},
+      closeEdit: false
     };
   },
   methods: {
@@ -249,9 +253,28 @@ export default {
           this.editData = data
         })
         .catch(({response}) => {
-          console.log(response);
+          Swal.fire(response.data.message, '', 'error')
         })
-    }
+    },
+    edit(data) {
+      // console.log(data);
+      axios({
+        method: 'PUT',
+        url: this.server + `tasks/${data.id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: data.title
+        }
+      })
+        .then(({data}) => {
+          console.log(data);
+        })
+        .catch(({response}) => {
+          Swal.fire(response.data.message, '', 'error')
+        })
+    },
   },
   created() {
     this.checkAuth()
